@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .idea/
 /bootstrap/compiled.php
 /vendor
@@ -8,8 +7,3 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
-=======
-/bootstrap/compiled.php
-.env.*.php
-.env.php
->>>>>>> 8cba83bf7b673771ff8cf5e286660f9c3b72331d
