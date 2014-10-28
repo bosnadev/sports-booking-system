@@ -1,6 +1,14 @@
 <?php
 
+use sportBooking\Repositories\User\UserRepository;
+
 class UserController extends \BaseController {
+
+    protected $user;
+
+    public function __construct(UserRepository $user) {
+        $this->user = $user;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -10,7 +18,7 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return $this->user->getAllUsers();
 	}
 
 	/**
@@ -21,7 +29,7 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('users.create');
 	}
 
 	/**
