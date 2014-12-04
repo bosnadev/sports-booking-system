@@ -1,6 +1,18 @@
 <?php
 
+use sportsBooking\Repositories\User\UserRepository;
+use sportsBooking\Services\Validator;
+
 class UserController extends \BaseController {
+
+    protected $user;
+
+    protected $validator;
+
+    public function __construct(UserRepository $user, Validator $validator) {
+        $this->user         = $user;
+        $this->validator    = $validator;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -10,7 +22,8 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$users = $this->user->getAllUsers();
+        return View::make('users.index' , compact('users'));
 	}
 
 	/**
@@ -21,7 +34,7 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('users.create');
 	}
 
 	/**
@@ -32,7 +45,16 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+        $v = $this->validator->with(Input::all())->useRules('userCreateRules');
+		if ($v->passes())
+        {
+            $this->user->store(Input::all());
+            return Redirect::route('users.index')->with('success' , trans('users.user_saved'));
+        }
+        else
+        {
+            return Redirect::back()->withInput()->withErrors($v->errors());
+        }
 	}
 
 	/**
