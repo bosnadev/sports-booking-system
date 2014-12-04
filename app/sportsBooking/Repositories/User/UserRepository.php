@@ -6,7 +6,9 @@
  * Time: 22:33
  */
 
-namespace sportBooking\Repositories\User;
+namespace sportsBooking\Repositories\User;
+
+use Input, User;
 
 
 class UserRepository {
@@ -16,6 +18,16 @@ class UserRepository {
         $users = \User::all();
         return $users;
 
+    }
+
+    public function store()
+    {
+        $user                   =   new \User;
+        $user->first_name       =   Input::get('first_name');
+        $user->last_name        =   Input::get('last_name');
+        $user->email            =   Input::get('email');
+        $user->password         =   Input::get('password');
+        $user->save();
     }
 
 } 
