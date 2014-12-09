@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.2.*",
-        "cartalyst/sentry": "2.1.*"
+        "cartalyst/sentry": "2.1.*",
+        "teepluss/theme": "dev-master"
 	},
     "require-dev": {
         "way/generators": "~2.0"

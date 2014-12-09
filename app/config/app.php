@@ -124,6 +124,7 @@ return array(
 
         'Way\Generators\GeneratorsServiceProvider',
         'Cartalyst\Sentry\SentryServiceProvider',
+        'Teepluss\Theme\ThemeServiceProvider',
 
 	),
 
@@ -193,6 +194,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
         'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+        'Theme' => 'Teepluss\Theme\Facades\Theme',
 
 	),
 
