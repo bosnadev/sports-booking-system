@@ -9,10 +9,14 @@ class UserController extends \BaseController {
 
     protected $validator;
 
+    protected $theme;
+
     public function __construct(UserRepository $user, Validator $validator) {
         $this->user         = $user;
         $this->validator    = $validator;
+        $this->theme        = \Theme::uses('default');
     }
+
 
 	/**
 	 * Display a listing of the resource.
@@ -23,7 +27,8 @@ class UserController extends \BaseController {
 	public function index()
 	{
 		$users = $this->user->getAllUsers();
-        return View::make('users.index' , compact('users'));
+        return $this->theme->of('users.index' , [ 'users'   => $users ])->render();
+
 	}
 
 	/**
@@ -34,7 +39,7 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('users.create');
+		return $this->theme->of('users.create')->render();
 	}
 
 	/**
@@ -51,10 +56,8 @@ class UserController extends \BaseController {
             $this->user->store(Input::all());
             return Redirect::route('users.index')->with('success' , trans('users.user_saved'));
         }
-        else
-        {
-            return Redirect::back()->withInput()->withErrors($v->errors());
-        }
+        return Redirect::back()->withInput()->withErrors($v->errors());
+
 	}
 
 	/**
@@ -66,7 +69,8 @@ class UserController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$user = $this->user->find($id);
+        return $this->theme->of('users.show' , [ 'user' => $user])->render();
 	}
 
 	/**
@@ -78,8 +82,8 @@ class UserController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$user = User::find($id);
-        return View::make('users.edit' , compact('user'));
+		$user = $this->user->find($id);
+        return $this->theme->of('users.edit' , [ 'user' => $user ])->render();
 	}
 
 	/**
@@ -91,7 +95,14 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$v = $this->validator->with(Input::all())->useRules('userEditRules');
+        if ($v->passes())
+        {
+            $this->user->update($id);
+            return Redirect::route('users.index')->with('success' , trans('users.user_updated'));
+        }
+        return Redirect::back()->withInput()->withErrors($v->errors());
+
 	}
 
 	/**
@@ -103,7 +114,24 @@ class UserController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$this->user->delete($id);
+        return Redirect::back()->with('success' , trans('users.user_deleted'));
 	}
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+
+    public function updatePassword($id)
+    {
+        $v = $this->validator->with(Input::all())->useRules('updatePassword');
+        if ($v->passes())
+        {
+            $this->user->updatePassword($id);
+            return Redirect::route('users.index')->with('success' , trans('users.user_password_updated'));
+        }
+        return Redirect::back()->withErrors($v->errors());
+    }
 
 }

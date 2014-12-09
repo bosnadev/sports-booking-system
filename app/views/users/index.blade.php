@@ -19,7 +19,11 @@
             <td> {{ $user->first_name }}</td>
             <td> {{ $user->last_name }}</td>
             <td> {{ $user->email }}</td>
-            <td> {{ link_to_route('users.edit' , 'Edit' , $user->id) }} </td>
+            <td> {{ link_to_route('users.edit' , 'Edit' , $user->id) }}
+                {{ Form::open( [ 'route'    => [ 'users.destroy' , $user->id ] , 'method'   =>  'DELETE' ] ) }}
+                    {{ Form::submit('Delete') }}
+                {{ Form::close() }}
+             </td>
         </tr>
         @endforeach
       </tbody>

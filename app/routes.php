@@ -17,3 +17,4 @@ Route::get('/', function()
 });
 
 Route::resource( 'users' , 'UserController' );
+Route::put('/users/{id}/password' , [ 'as' => 'users.update.password' , 'uses' => 'UserController@updatePassword' ]);
