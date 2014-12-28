@@ -1,7 +1,3 @@
-@extends('layout.main')
-
-@section('content')
-
 <h1>Create new user</h1>
 
 {{ Form::open(array( 'route'    => 'users.store'    , 'method'  => 'POST' )) }}
@@ -48,5 +44,3 @@
 </div>
 
 {{ Form::close() }}
-
-@stop

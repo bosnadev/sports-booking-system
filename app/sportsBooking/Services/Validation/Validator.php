@@ -19,13 +19,18 @@ class Validator extends AbstractValidator {
         'last_name'                     => 'required'
     );
 
-    protected $userEditRules      = array(
+    protected $userEditRules        = array(
 
         'email'                         =>  'required'
 
     );
 
     protected $updatePassword           = array(
+        'password'                      => 'required|min:8|confirmed',
+    );
+
+    protected $registration         = array(
+        'email'                         => 'required|email|unique:users',
         'password'                      => 'required|min:8|confirmed',
     );
 

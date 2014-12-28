@@ -29,5 +29,7 @@
       </tbody>
     </table>
 
+    {{ link_to_route('users.create' , trans('users.create_new_user')) }}
+
 
 @stop

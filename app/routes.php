@@ -16,5 +16,7 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::resource( 'users' , 'UserController' );
+Route::resource( 'users'            ,   'UserController' );
+Route::resource( 'registration'     ,   'RegistrationController' , [ 'only' => [ 'index' , 'store' ] ]);
+
 Route::put('/users/{id}/password' , [ 'as' => 'users.update.password' , 'uses' => 'UserController@updatePassword' ]);
